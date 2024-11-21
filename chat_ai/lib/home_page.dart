@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:html'; // For Web - Instead of dart:io
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_web/image_picker_web.dart'; // Import for web
@@ -257,12 +258,16 @@ Future<void> _sendImage() async {
                                     color: isUserMessage ? Colors.purple : Colors.grey[300],
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Text(
-                                    message['message'],
-                                    style: TextStyle(
-                                      color: isUserMessage ? Colors.white : Colors.black,
-                                      fontSize: 16,
+                                  child: MarkdownBody(
+                                    data: message['message'], 
+                                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context).copyWith(
+                                    textTheme: TextTheme(
+                                      bodyMedium: TextStyle(
+                                                    fontSize: 16, // Ensure fontSize is defined for bodyMedium
+                                                    color: isUserMessage ? Colors.white : Colors.black, // Optional: Change text color
+                                                  ),
                                     ),
+                                    )),
                                   ),
                                 ),
                           ),
